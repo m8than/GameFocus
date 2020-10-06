@@ -94,7 +94,7 @@ namespace GameFocus
                                 bounds.Right != primaryMonitorPos.Right
                                 )
                             {
-                                Form blocker = new UnfocusableForm(bounds, trackOpacityValue / 10);
+                                Form blocker = new UnfocusableForm(bounds, (double)trackOpacityValue / 10);
                                 blocker.Show();
                                 inputBlockers.Add(blocker);
                             }
