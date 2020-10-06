@@ -44,7 +44,13 @@ namespace GameFocus
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowRect(IntPtr hwnd, out RECT rc);
 
-        private bool isOn = false;
+        private bool isOn;
+
+        private RECT focusWindowPos;
+        private Rectangle primaryMonitorPos;
+        private bool fullscreenAppOpen;
+
+        private int trackOpacityValue;
 
 
         public mainForm()
@@ -55,6 +61,9 @@ namespace GameFocus
         private void Form1_Load(object sender, EventArgs e)
         {
             this.btnOff.Enabled = false;
+            this.isOn = false;
+            this.trackOpacityValue = trackOpacity.Value;
+            this.fullscreenAppOpen = false;
 
             Thread tFullscreenChecker = new Thread(fullscreenChecker);
             tFullscreenChecker.IsBackground = true;
@@ -85,7 +94,7 @@ namespace GameFocus
                                 bounds.Right != primaryMonitorPos.Right
                                 )
                             {
-                                Form blocker = new UnfocusableForm(bounds, trackOpacity.Value / 10);
+                                Form blocker = new UnfocusableForm(bounds, trackOpacityValue / 10);
                                 blocker.Show();
                                 inputBlockers.Add(blocker);
                             }
@@ -111,9 +120,6 @@ namespace GameFocus
             }
         }
 
-        private bool fullscreenAppOpen = false;
-        private RECT focusWindowPos;
-        private Rectangle primaryMonitorPos;
         private void fullscreenChecker()
         {
             IntPtr hWnd;
@@ -157,6 +163,10 @@ namespace GameFocus
             this.isOn = false;
             this.btnOn.Enabled = true;
             this.btnOff.Enabled = false;
+        }
+        private void TrackOpacity_Scroll(object sender, EventArgs e)
+        {
+            trackOpacityValue = trackOpacity.Value;
         }
     }
 }

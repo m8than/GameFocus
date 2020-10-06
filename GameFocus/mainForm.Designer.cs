@@ -74,6 +74,7 @@
             this.trackOpacity.TabIndex = 3;
             this.trackOpacity.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.trackOpacity.Value = 7;
+            this.trackOpacity.Scroll += new System.EventHandler(this.TrackOpacity_Scroll);
             // 
             // mainForm
             // 
